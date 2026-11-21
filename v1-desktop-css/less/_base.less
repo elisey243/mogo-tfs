@@ -1,0 +1,1085 @@
+// Задание 4. Базовые (десктопные) стили макета MoGo.
+// Раскладка всех блоков — на flexbox. Медиазапросы вынесены в _adaptive.less.
+
+@import "_variables.less";
+@import "_mixins.less";
+
+/* ---------- Сброс ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+body {
+    font-family: @font-text;
+    font-size: 15px;
+    line-height: 1.6;
+    color: @gray;
+    background-color: @white;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* ---------- Общие блоки ---------- */
+.container {
+    .container();
+}
+
+.section {
+    padding: 90px 0;
+}
+
+.section-head {
+    .section-head();
+
+    margin-bottom: 60px;
+}
+
+.divider {
+    .divider();
+
+    &--sm {
+        width: 60px;
+        height: 3px;
+        margin: 18px 0;
+    }
+
+    &--left {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+.btn {
+    display: inline-block;
+    font-family: @font-main;
+    font-weight: 700;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: @white;
+    border: 3px solid @white;
+    padding: 10px 30px;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover,
+    &:focus {
+        background-color: @white;
+        color: @dark;
+    }
+}
+
+/* ---------- Шапка ---------- */
+.header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding-top: 28px;
+
+    &__row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    &__logo {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 30px;
+        color: @white;
+    }
+}
+
+.main-nav {
+    &__list {
+        display: flex;
+        align-items: center;
+        list-style: none;
+    }
+
+    &__item {
+        margin-left: 40px;
+
+        &--icon {
+            margin-left: 32px;
+        }
+    }
+
+    &__link {
+        display: block;
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @white;
+        padding-bottom: 12px;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 3px;
+            background-color: @accent;
+            transition: transform 0.2s;
+            transform: scaleX(0);
+        }
+
+        &:hover::after,
+        &:focus::after {
+            transform: scaleX(1);
+        }
+
+        &--icon {
+            padding-bottom: 0;
+
+            &::after {
+                display: none;
+            }
+
+            &:hover {
+                color: @accent;
+            }
+        }
+    }
+}
+
+/* ---------- Баннер ---------- */
+.hero {
+    min-height: 1000px;
+    display: flex;
+    flex-direction: column;
+    background-image: linear-gradient(to bottom, rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9)), url("../img/hero.jpg");
+    background-size: cover;
+    background-position: center;
+    color: @white;
+    text-align: center;
+    padding: 240px 0 20px;
+
+    &__inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__pretitle {
+        font-family: @font-script;
+        font-size: clamp(28px, 4vw, 72px);
+        margin-bottom: 8px;
+    }
+
+    &__title {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: clamp(38px, 7.5vw, 150px);
+        line-height: 1.1;
+        text-transform: uppercase;
+        margin-bottom: 90px;
+    }
+
+    &__btn {
+        margin-top: 50px;
+    }
+
+    &__slider {
+        display: flex;
+        width: 1212px;
+        max-width: 100%;
+        margin: 0 auto;
+        padding: 0 12px;
+    }
+
+    &__slide {
+        flex: 1;
+        opacity: 0.7;
+        cursor: pointer;
+
+        &--active {
+            opacity: 1;
+        }
+    }
+
+    &__slide-bar {
+        display: block;
+        height: 3px;
+        background-color: rgba(255, 255, 255, 0.5);
+        margin-bottom: 14px;
+
+        .hero__slide--active & {
+            background-color: @white;
+            background-image: linear-gradient(to right, @accent 0 72px, @white 72px);
+        }
+    }
+
+    &__slide-caption {
+        font-family: @font-main;
+        font-size: 18px;
+        text-transform: uppercase;
+        text-align: left;
+    }
+
+    &__slide-num {
+        font-weight: 700;
+        font-size: 24px;
+        margin-right: 6px;
+    }
+}
+
+.hero .divider {
+    background-color: @white;
+}
+
+/* ---------- Story about us ---------- */
+.about {
+    &__gallery {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.photo-card {
+    position: relative;
+    flex: 0 0 382px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &__img {
+        transition: transform 0.3s;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: @white;
+        background-image: linear-gradient(to bottom, rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9));
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    &__caption {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 18px;
+        text-transform: uppercase;
+        margin-top: 12px;
+    }
+
+    &:hover &__overlay,
+    &:focus-within &__overlay {
+        opacity: 1;
+    }
+
+    &:hover &__img {
+        transform: translate(10px, -10px);
+    }
+}
+
+/* ---------- Факты ---------- */
+.facts {
+    background-color: @accent-mint;
+    color: @white;
+
+    &__row {
+        .container();
+
+        display: flex;
+        min-height: 272px;
+    }
+
+    &__item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-left: 1px solid rgba(255, 255, 255, 0.35);
+
+        &:first-child {
+            border-left: none;
+        }
+    }
+
+    &__number {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 72px;
+        line-height: 1.2;
+    }
+
+    &__label {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+}
+
+/* ---------- Услуги ---------- */
+.services {
+    &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.service {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 20px;
+    align-items: start;
+    text-align: left;
+    padding: 24px 24px 24px 0;
+
+    &:nth-child(n+4) {
+        border-top: 1px solid @line;
+    }
+
+    &__icon {
+        color: @accent-mint;
+        grid-row: 1 / span 2;
+    }
+
+    &__title {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+        margin-bottom: 10px;
+    }
+}
+
+/* ---------- Unique design ---------- */
+.feature {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("../img/feature-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    padding: 90px 0 0;
+
+    &__devices {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    &__tablet {
+        width: 477px;
+        max-width: 90%;
+    }
+
+    &__phone {
+        position: absolute;
+        right: ~"max(12px, calc(50% - 380px))";
+        bottom: -80px;
+        width: 274px;
+    }
+}
+
+/* ---------- What we do ---------- */
+.wedo {
+    overflow: hidden;
+
+    &__row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    &__photo {
+        flex: 0 0 572px;
+        max-width: 47%;
+    }
+}
+
+.accordion {
+    flex: 1 1 auto;
+    max-width: 600px;
+
+    &__item {
+        border: 1px solid @line;
+        margin-bottom: 12px;
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+        padding: 16px;
+        cursor: pointer;
+        list-style: none;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        > svg {
+            color: @accent-mint;
+            flex: 0 0 auto;
+        }
+    }
+
+    &__item[open] &__head {
+        border-bottom: 1px solid @line;
+    }
+
+    &__arrow {
+        margin-left: auto;
+        color: @gray-light;
+        display: inline-flex;
+        transition: transform 0.2s;
+
+        svg {
+            display: block;
+        }
+    }
+
+    &__item[open] &__arrow {
+        transform: rotate(180deg);
+    }
+
+    &__body {
+        max-height: 180px;
+        overflow: auto;
+        padding: 16px;
+        font-style: italic;
+        font-weight: 300;
+        color: @gray;
+    }
+}
+
+/* ---------- Цитата ---------- */
+.quote {
+    background-color: @bg-light;
+
+    &__row {
+        .container();
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 292px;
+        gap: 40px;
+    }
+
+    &__arrow {
+        flex: 0 0 auto;
+        background: none;
+        border: none;
+        color: @gray-light;
+        font-size: 0;
+        cursor: pointer;
+        padding: 10px;
+
+        &:hover {
+            color: @gray;
+        }
+    }
+
+    &__body {
+        display: flex;
+        align-items: flex-start;
+        gap: 40px;
+    }
+
+    &__icon {
+        flex: 0 0 auto;
+        box-sizing: border-box;
+        width: 150px;
+        height: 150px;
+        border: 1px solid @accent-mint;
+        padding: 42px;
+        color: @accent-mint;
+    }
+
+    &__text {
+        p {
+            font-style: italic;
+            font-weight: 300;
+            font-size: 24px;
+            line-height: 1.5;
+            color: @gray;
+        }
+    }
+
+    &__author {
+        font-family: @font-script;
+        font-size: 24px;
+        color: @dark;
+    }
+}
+
+.testimonial {
+    &__photo {
+        flex: 0 0 auto;
+        width: 212px;
+        height: 212px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+}
+
+/* ---------- Команда ---------- */
+.team {
+    &__grid {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.team-card {
+    flex: 0 0 382px;
+
+    &__photo-wrap {
+        position: relative;
+        background-color: @accent-mint;
+        transition: transform 0.2s;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: -10px;
+            bottom: -10px;
+            border: 1px solid @accent-mint;
+            z-index: -1;
+            transition: transform 0.2s;
+        }
+    }
+
+    &:hover &__photo-wrap {
+        transform: translate(-10px, 10px);
+
+        &::before {
+            transform: translate(10px, -10px);
+        }
+    }
+
+    &__photo {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    &__social {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        list-style: none;
+        background-image: linear-gradient(to bottom, rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9));
+        opacity: 0;
+        transition: opacity 0.2s;
+
+        .team-card:hover &,
+        .team-card:focus-within & {
+            opacity: 1;
+        }
+    }
+
+    &__social-item {
+        background-color: @accent;
+        transition: background-color 0.2s;
+
+        & + & {
+            border-left: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        &:hover {
+            background-color: #e86f6f;
+        }
+    }
+
+    &__social-link {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 56px;
+        height: 56px;
+        color: @white;
+    }
+
+    &__name {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+        text-align: center;
+        margin-top: 26px;
+    }
+
+    &__role {
+        font-style: italic;
+        font-weight: 300;
+        color: @gray;
+        text-align: center;
+        margin-top: 6px;
+    }
+}
+
+/* ---------- Логотипы ---------- */
+.logos {
+    padding: 50px 0;
+
+    &__strip {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 1212px;
+    }
+}
+
+/* ---------- Работы ---------- */
+.works {
+    &__gallery {
+        display: flex;
+    }
+
+    &__col {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+
+        .work {
+            flex: 1;
+        }
+    }
+}
+
+.work {
+    position: relative;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    &__overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: @white;
+        background-image: linear-gradient(to bottom, rgba(243, 129, 129, 0.9), rgba(252, 227, 138, 0.9));
+        opacity: 0;
+        transition: opacity 0.3s;
+
+        &::before {
+            content: "";
+            width: 32px;
+            height: 26px;
+            margin-bottom: 14px;
+            background: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpolyline points='21 15 16 10 5 21'/%3E%3C/svg%3E") center / contain no-repeat;
+        }
+    }
+
+    &:hover &__overlay,
+    &:focus-within &__overlay {
+        opacity: 1;
+    }
+
+    &__overlay-title {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+
+    &__overlay-text {
+        font-style: italic;
+        font-weight: 300;
+        margin-top: 4px;
+    }
+}
+
+/* ---------- What people say ---------- */
+.say {
+    background-image: linear-gradient(rgba(248, 248, 248, 0.9), rgba(248, 248, 248, 0.9)), url("../img/say-bg.jpg");
+    background-size: cover;
+    background-position: center;
+    padding: 90px 0;
+
+    &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 50px 0;
+    }
+}
+
+.review {
+    flex: 0 0 50%;
+    display: flex;
+    align-items: flex-start;
+    padding: 0 40px;
+
+    &__photo {
+        flex: 0 0 auto;
+        margin-right: 30px;
+        border-radius: 50%;
+    }
+
+    &__name {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+    }
+
+    &__role {
+        font-family: @font-main;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 15px;
+        color: @gray;
+        margin-top: 4px;
+    }
+
+    &__text {
+        margin-top: 4px;
+    }
+}
+
+/* ---------- Блог ---------- */
+.blog {
+    &__grid {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.post {
+    flex: 0 0 382px;
+
+    &__photo-wrap {
+        position: relative;
+    }
+
+    &__photo {
+        width: 100%;
+        object-fit: cover;
+    }
+
+    &__date {
+        position: absolute;
+        left: -10px;
+        bottom: 10px;
+        width: 62px;
+        padding: 6px 0;
+        background-color: @accent-mint;
+        color: @white;
+        font-family: @font-text;
+        font-style: italic;
+        font-size: 15px;
+        text-align: center;
+        line-height: 1.2;
+    }
+
+    &__day {
+        display: block;
+        font-family: @font-main;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 30px;
+    }
+
+    &__title {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+        margin-top: 16px;
+    }
+
+    &__text {
+        margin-top: 10px;
+    }
+
+    &__divider {
+        height: 1px;
+        background-color: @line;
+        margin-top: 14px;
+    }
+
+    &__meta {
+        display: flex;
+        gap: 16px;
+        margin-top: 12px;
+        font-style: italic;
+        font-weight: 300;
+        color: @gray-light;
+    }
+
+    &__views,
+    &__comments {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        svg {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+/* ---------- Карта ---------- */
+.map {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url("../img/map.jpg");
+    background-size: cover;
+    background-position: center;
+    min-height: 202px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: @accent;
+
+    &__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+    }
+
+    &__title {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 24px;
+        text-transform: uppercase;
+        margin: 10px 0 14px;
+    }
+
+    .divider {
+        background-color: @accent;
+    }
+}
+
+/* ---------- Подвал ---------- */
+.footer {
+    background-color: @bg-light;
+    padding-top: 70px;
+
+    &__grid {
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+    }
+
+    &__about {
+        flex: 0 1 480px;
+    }
+
+    &__blogs {
+        flex: 0 0 350px;
+    }
+
+    &__instagram {
+        flex: 0 0 290px;
+    }
+
+    &__logo {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 46px;
+        color: @gray-light;
+        margin-bottom: 26px;
+    }
+
+    &__text {
+        margin-bottom: 26px;
+    }
+
+    &__followers {
+        font-family: @font-main;
+        font-size: 14px;
+        color: @dark;
+        padding-bottom: 16px;
+        border-bottom: 1px solid @line;
+    }
+
+    &__followers-num {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    &__social-label {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        font-style: italic;
+        font-weight: 300;
+        color: @gray-light;
+        margin-top: 14px;
+    }
+
+    &__social {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+
+        a {
+            color: @accent-mint;
+            transition: color 0.2s;
+
+            &:hover {
+                color: @accent;
+            }
+        }
+    }
+
+    &__heading {
+        font-family: @font-main;
+        font-size: 14px;
+        text-transform: uppercase;
+        color: @dark;
+        margin-bottom: 26px;
+    }
+
+    &__blog-list {
+        list-style: none;
+    }
+
+    &__blog-item {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 26px;
+
+        img {
+            flex: 0 0 auto;
+            width: 120px;
+            height: 82px;
+            object-fit: cover;
+        }
+    }
+
+    &__blog-title {
+        font-family: @font-main;
+        font-size: 12px;
+        line-height: 1.5;
+        color: @dark;
+    }
+
+    &__blog-date {
+        font-style: italic;
+        font-weight: 300;
+        font-size: 13px;
+        color: @gray-light;
+        margin-top: 6px;
+    }
+
+    &__insta-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2px;
+
+        img {
+            width: 88px;
+            height: 88px;
+            object-fit: cover;
+        }
+    }
+
+    &__more {
+        display: inline-block;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 13px;
+        color: @gray-light;
+        margin-top: 12px;
+
+        &:hover {
+            color: @accent;
+        }
+    }
+
+    &__bottom {
+        border-top: 1px solid @line;
+        margin-top: 30px;
+        padding-top: 24px;
+        padding-bottom: 24px;
+        text-align: center;
+        font-family: @font-main;
+        font-size: 14px;
+        color: @dark;
+    }
+
+    &__link {
+        color: @dark;
+    }
+}
+
+/* ---------- Форма подписки ---------- */
+.subscribe {
+    display: flex;
+    margin-top: 34px;
+
+    &__label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+    }
+
+    &__input {
+        flex: 1 1 auto;
+        min-width: 0;
+        border: 1px solid @line;
+        background-color: @white;
+        font-family: @font-text;
+        font-style: italic;
+        font-weight: 300;
+        font-size: 15px;
+        color: @dark;
+        padding: 10px 14px;
+
+        &::placeholder {
+            color: @gray-light;
+        }
+
+        &:focus {
+            outline: 1px solid @accent-mint;
+        }
+    }
+
+    &__btn {
+        flex: 0 0 auto;
+        border: none;
+        background-color: @accent-mint;
+        color: @white;
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 10px 30px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+
+        &:hover {
+            background-color: @accent;
+        }
+    }
+}

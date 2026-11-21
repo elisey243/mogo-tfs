@@ -1,0 +1,317 @@
+// Задание 4. Адаптивная версия: контрольные точки 1024px (планшет) и 640px (смартфон).
+// Подход mobile-last (от десктопа макета вниз) — как в самом PSD-шаблоне.
+
+@import "_variables.less";
+@import "_mixins.less";
+
+/* ---------- Планшет: ширина окна до 1024px ---------- */
+@media (max-width: 1024px) {
+
+    .header {
+        &__row {
+            flex-wrap: wrap;
+            row-gap: 12px;
+        }
+    }
+
+    .main-nav {
+        &__item {
+            margin-left: 24px;
+        }
+    }
+
+    .hero {
+        min-height: 640px;
+        padding-top: 200px;
+
+        &__title {
+            margin-bottom: 40px;
+        }
+    }
+
+    // галереи из трёх карточек — в две колонки
+    .about__gallery,
+    .team__grid,
+    .blog__grid {
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 30px;
+    }
+
+    .services__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .photo-card,
+    .team-card,
+    .post {
+        flex: 0 0 46%;
+    }
+
+    .service {
+        border-top: 1px solid @line;
+
+        &:nth-child(-n+2) {
+            border-top: none;
+        }
+    }
+
+    // факты переносятся: 3 + 2
+    .facts {
+        &__row {
+            flex-wrap: wrap;
+            min-height: 0;
+        }
+
+        &__item {
+            flex: 1 1 33%;
+            min-height: 136px;
+            border-top: 1px solid rgba(255, 255, 255, 0.35);
+
+            &:nth-child(-n+3) {
+                border-top: none;
+            }
+
+            &:nth-child(4) {
+                border-left: none;
+            }
+        }
+    }
+
+    .wedo {
+        &__row {
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        &__photo {
+            flex: none;
+            max-width: 570px;
+            width: 100%;
+        }
+    }
+
+    .accordion {
+        max-width: none;
+        width: 100%;
+    }
+
+    .quote {
+        &__body {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+        }
+    }
+
+    // галерея работ: 4 колонки -> 2
+    .works__gallery {
+        flex-wrap: wrap;
+
+        .works__col {
+            flex: 1 1 50%;
+        }
+
+        .work--tall {
+            flex: 1 1 50%;
+            order: 4;
+        }
+    }
+
+    .review {
+        flex: 0 0 100%;
+    }
+
+    .footer {
+        &__grid {
+            flex-wrap: wrap;
+        }
+
+        &__about {
+            flex: 1 1 100%;
+        }
+
+        &__blogs {
+            flex: 1 1 46%;
+        }
+
+        &__instagram {
+            flex: 1 1 46%;
+        }
+    }
+}
+
+/* ---------- Смартфон: ширина окна до 640px ---------- */
+@media (max-width: 640px) {
+
+    .section {
+        padding: 50px 0;
+    }
+
+    .section-head {
+        margin-bottom: 36px;
+
+        &__text {
+            margin-top: 24px;
+        }
+    }
+
+    .header {
+        padding-top: 16px;
+
+        &__row {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+
+    .main-nav {
+        &__list {
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        &__item {
+            margin-left: 16px;
+        }
+
+        &__item--icon {
+            display: none; // декоративные иконки на телефоне не помещаются
+        }
+
+        &__link {
+            padding-bottom: 6px;
+        }
+    }
+
+    .hero {
+        min-height: 480px;
+        padding: 180px 0 10px;
+    }
+
+    .hero__slider {
+        flex-wrap: wrap;
+
+        .hero__slide {
+            flex: 1 1 50%;
+            margin-bottom: 10px;
+        }
+    }
+
+    .photo-card,
+    .team-card,
+    .post {
+        flex: 0 0 100%;
+    }
+
+    .services__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .service {
+        border-top: 1px solid @line;
+
+        &:first-child {
+            border-top: none;
+        }
+    }
+
+    .facts {
+        &__item {
+            flex: 1 1 50%;
+
+            &:nth-child(3) {
+                border-left: none;
+            }
+
+            &:nth-child(-n+2) {
+                border-top: none;
+            }
+
+            &:nth-child(3),
+            &:nth-child(4) {
+                border-top: 1px solid rgba(255, 255, 255, 0.35);
+            }
+        }
+    }
+
+    .feature {
+        padding-top: 50px;
+
+        &__phone {
+            right: 0;
+            bottom: -40px;
+            width: 180px;
+        }
+    }
+
+    .quote {
+        &__row {
+            flex-direction: column;
+            gap: 16px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+        }
+
+        &__arrow {
+            transform: rotate(90deg);
+        }
+
+        &__icon {
+            display: none;
+        }
+    }
+
+    .testimonial__photo {
+        display: none;
+    }
+
+    .works__gallery {
+        .works__col {
+            flex: 1 1 100%;
+        }
+
+        .work--tall {
+            flex: 1 1 100%;
+        }
+    }
+
+    .review {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+
+        .divider--sm {
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    .footer {
+        &__blogs,
+        &__instagram {
+            flex: 1 1 100%;
+        }
+
+        &__blog-item img {
+            width: 90px;
+            height: 62px;
+        }
+
+        &__insta-grid {
+            justify-content: center;
+        }
+    }
+
+    .subscribe {
+        flex-direction: column;
+        gap: 8px;
+
+        &__btn {
+            width: 100%;
+        }
+    }
+}

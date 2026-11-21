@@ -1,0 +1,13 @@
+{
+  "name": "task4-mogo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Задание 4 (контрольное): вёрстка макета 02.psd. CSS подготовлен фреймворком LESS.",
+  "scripts": {
+    "build": "lessc less/styles.less css/styles.css",
+    "build:desktop": "lessc less/styles-desktop.less css/styles-desktop.css"
+  },
+  "devDependencies": {
+    "less": "^4.2.0"
+  }
+}

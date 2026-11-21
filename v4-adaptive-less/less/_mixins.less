@@ -1,0 +1,46 @@
+// Задание 4. Примеси (mixin)
+
+.container() {
+    max-width: @container-width;
+    margin: 0 auto;
+    padding: 0 @container-padding;
+}
+
+// Заголовочный блок секции: рукописный подзаголовок + заголовок + линия
+.section-head() {
+    text-align: center;
+
+    &__pretitle {
+        font-family: @font-script;
+        font-size: 24px;
+        color: @dark;
+        margin: 0 0 16px;
+    }
+
+    &__title {
+        font-family: @font-main;
+        font-weight: 700;
+        font-size: 30px;
+        text-transform: uppercase;
+        color: @dark;
+        margin: 0 0 18px;
+    }
+
+    &__text {
+        font-family: @font-text;
+        font-size: 15px;
+        line-height: 1.6;
+        color: @gray;
+        max-width: 960px;
+        margin: 40px auto 0;
+    }
+}
+
+// Красная линия-разделитель 62x5 из макета
+.divider() {
+    display: block;
+    width: 62px;
+    height: 5px;
+    background-color: @accent;
+    margin: 0 auto;
+}
